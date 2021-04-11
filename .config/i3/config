@@ -1,0 +1,151 @@
+# startup programs
+exec --no-startup-id picom -b
+
+
+# visuals
+
+## gaps
+gaps outer 0f
+gaps inner 20
+
+## TODO: What problem?
+# (Original comment: "uncommenting the line below fixes the problem")
+for_window [class=".*"] border pixel 0
+
+## Font for window titles.
+font pango:monospace 8
+
+## Gruvbox colorscheme colors
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+
+# class                 border|backgr|text|indicator|child_border
+client.focused          $blue $blue $darkgray $purple $darkgray
+client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+client.urgent           $red $red $white $red $red
+
+# Start i3bar to display a workspace barf
+bar {
+        status_command i3blocks
+        # https://www.reddit.com/r/i3wm/comments/c3dux4/how_to_get_nerd_fonts_icons_with_my_i3bar/
+        font xft:Hack Nerd Font 10
+        colors {
+            # text color used for blocks that do not have a color specified
+            statusline $yellow
+            # bar background color
+            background $bg
+            #                    border backgr. text
+            focused_workspace    $aqua $aqua $darkgray
+            inactive_workspace   $darkgray $darkgray $yellow
+            active_workspace     $darkgray $darkgray $yellow
+            urgent_workspace     $red $red $bg
+        }
+}
+
+# keybindings - applications
+
+## terminal
+# TODO: Make it so that we always use launch kitty
+# (Might need to set $TERMINAL?)
+# https://build.i3wm.org/docs/i3-sensible-terminal.html
+bindsym $mod+Return exec kitty
+
+## Chrome
+bindsym $mod+c exec google-chrome-stable
+
+## exiting
+bindsym $mod+Shift+e gnome-session-quit
+
+# keybindings - window management
+
+## Use super as modifier key
+set $mod Mod4
+
+## kill focused window
+bindsym $mod+Shift+q kill
+
+## change focus -- Vim bindings
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+## change focus -- arrow keys
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+## move focused window -- Vim-like bindings
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+## move focused window -- arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# create splits -- my custom Vim bindings
+# - x for horizontal vim split
+# - v for vertical vim split
+
+# split in horizontal orientation
+bindsym $mod+v split h
+
+# split in vertical orientation
+bindsym $mod+x split v
+
+## enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+## move workspaces between monitors
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
+
+## I think this sets workspace names?
+# I'm assuming i3 has 10 default workspaces which can be accessed through $ws[1-10]
+set $ws1 "01"
+set $ws2 "02"
+set $ws3 "03"
+set $ws4 "04"
+set $ws5 "05"
+set $ws6 "06"
+set $ws7 "07"
+set $ws8 "08"
+set $ws9 "09"
+set $ws10 "10"
+
+## switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+## move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
