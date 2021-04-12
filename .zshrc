@@ -1,9 +1,5 @@
-# Set up the prompt
-
-autoload -Uz promptinit
-promptinit
-prompt adam1
-
+# TODO: The prompt is still a bit slow to startup
+# but... usiing powerline10k is overkill (& adds unnecessary complexity)
 setopt histignorealldups sharehistory
 
 # Use emacs keybindings even if our EDITOR is set to vi
@@ -33,11 +29,14 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # https://github.com/agkozak/zsh-z/
 # jump around directories with `z`
-#source ~/.zsh/zsh-z.plugin.zsh
+source ~/.zsh/zsh-z.plugin.zsh
 
 # Fish-like auto suggestions
 # https://github.com/zsh-users/zsh-autosuggestions
+# These might improve perf?
 #ZSH_AUTOSUGGEST_MANUAL_REBIND="true"
+#ZSH_AUTOSUGGEST_USE_ASYNC="true"
+# Note
 source ~/.zsh/autosuggestions.zsh
 
 
@@ -49,8 +48,22 @@ compinit
 # "If you add <the below> to your .zshrc, your completion menus will look nice"
 zstyle ':completion:*' menu select
 
+# Git integration: https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
+zstyle ':vcs_info:*' enable git
+
+# Make sure there are no lines like
+# "autoload -Uz promptinit && promptinit && prompt adam1"
+# or your prompt will be overridden
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
+
 # Syntax highlighting
 # there's another plugin (fast-syntax-highlighting) that has
-# better details/highlighting but it makes zsh slower to startup
+# better details/highlighting but it makes zsh slower to startup (I think?)
 # This plugin must be sourced at the end
 source ~/.zsh/syntax-highlighting/syntax-highlighting.zsh
