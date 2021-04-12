@@ -9,7 +9,7 @@
   Just leave guidelines for the human.
   - Basic install scripts for sets of commands is fine
 
-## Dependencies
+## Some Dependencies
 - https://github.com/deuill/i3-gnome-flashback
   - Use i3-gaps
   - Allows brightness, volume control, bluetooth, all of Gnome's utilities!?
@@ -29,3 +29,11 @@
   - neovim copy/paste (see :help clipboard in Neovim)
 - [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
   - Run `./install.sh Hack`
+
+## Random Commands
+- `chsh -s $(which zsh)` to make zsh default shell
+
+## Quirks
+- I have included versions of the zsh plugins in this repo (instead of cloning them).
+  This means their versions are frozen unless I manually update. This seems fine
+  since I never previously manually updated.
