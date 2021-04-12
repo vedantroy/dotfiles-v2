@@ -18,6 +18,7 @@
 - https://github.com/Mayccoll/Gogh
   - Run this to make gnome-terminal use gruvbox
   - Afterwards, right click (in terminal window) -> Preferences -> (Set Gruvbox as default profile)
+  - [May fix error](https://github.com/Mayccoll/Gogh/issues/203)
 
 ### i3 aux
 - rofi
