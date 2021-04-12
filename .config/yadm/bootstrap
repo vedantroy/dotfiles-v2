@@ -15,7 +15,7 @@ cd i3-gnome-flashback
 sudo make install
 cd ..
 
-sudo apt install zsh curl neovim rofi i3blocks feh xclip fzf ripgrep redshift picom unzip
+sudo apt install zsh curl neovim rofi i3blocks feh xclip fzf ripgrep redshift picom unzip wget
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
 
 # Chrome
@@ -24,3 +24,9 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 
 # Change default shell to zsh
 chsh -s $(which zsh)
+
+# add fzf shell integration
+sudo mkdir /usr/share/fzf
+sudo wget https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh -P /usr/share/fzf
+sudo wget https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh   -P /usr/share/fzf
+
