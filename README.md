@@ -43,3 +43,5 @@
 - You might need to disable the header bar for Gnome terminal with `gsettings set org.gnome.Terminal.Legacy.Settings headerbar false`
   - Close all terminals afterwards to make changes take effect	
   - Disable the menu bar with a right-click on it + "Don't show" (or whatever the option is)
+- Also disable the menubar by in Gnome terminal's general preferences
+- When installing Python, asdf compiles it from source?! So follow [this guide](https://github.com/pyenv/pyenv/wiki/Common-build-problems)
