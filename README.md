@@ -2,7 +2,9 @@
 
 ## Principles:
 - Prefer less applications rather than more
+    - More applications cause setups to degrade overtime (even if they look nicer/are initially faster). The fastest optimization is deletion.
     - E.g using gnome-terminal > kitty
+    - E.g not using powerlevel10k
     - But install applications necessary for any functionality + basic aesthetics
     	- E.g picom for transparency / shadows, but not kitty for font ligatures
 - Don't try to create an all-in-one install script (too fragile). The human is the installer.
