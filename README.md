@@ -16,4 +16,16 @@
 - https://github.com/Mayccoll/Gogh
   - Run this to make gnome-terminal use gruvbox
   - Afterwards, right click (in terminal window) -> Preferences -> (Set Gruvbox as default profile)
- 
+
+### i3 aux
+- rofi
+- i3blocks
+- feh
+  - background image
+- ~~yad, xdotool~~
+  - i3blocks calendar popup
+  - Currently broken
+- xclip
+  - neovim copy/paste (see :help clipboard in Neovim)
+- [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
+  - Run `./install.sh Hack`
