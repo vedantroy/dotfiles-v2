@@ -1,0 +1,57 @@
+#! /usr/bin/env python3
+
+import subprocess
+import os
+import re
+import sys
+from __helpers__ import (
+    safe_execute,
+    print_i3blocks,
+    Color,
+    set_except_hook,
+    strip_trailing_newline,
+    readfile,
+)
+
+# This program was a shell script I ported to Python.
+# As such, it has some unnecessary calls to external programs that could be replaced
+# with pure python
+
+# This line should always be first -- it ensures exceptions are
+# caught, recorded to a log file, and the widget displays a warning
+sys.excepthook = set_except_hook(__file__)
+
+# TODO: Replace this w/ Python -- instead of abusing shell completion
+stdout = safe_execute("echo /sys/class/net/w*")
+interface = strip_trailing_newline(stdout.split("/")[-1])
+has_wifi_capabilities = os.path.isdir(f"/sys/class/net/{interface}/wireless")
+disabled_icon = "睊"
+enabled_icon = "直"
+if not has_wifi_capabilities:
+    print_i3blocks(f"{disabled_icon} [No WiFi Enabled]", color=Color.DISABLED)
+else:
+    # Check if there's a connection
+    text = readfile(f"/sys/class/net/{interface}/operstate")
+    stdout = strip_trailing_newline(text)
+    msg = None
+    color = None
+    if stdout == "up":
+        # TODO: Replace with Python code. It's probably faster?!
+        # (shell is bad and we should strive to get rid of it)
+        strength = safe_execute(
+            f"grep {interface} /proc/net/wireless | awk '{{ print int($3 * 100 / 70) }}'"
+        )
+        # remove newline
+        strength = strength[:-1]
+        network_info = safe_execute(f"iw dev {interface} link")
+        # remove newline
+        network_info = network_info[:-1]
+        SSID_line = network_info.split("\n")[1]
+        network_name = SSID_line[len("SSID: ") + 1 :]
+        print_i3blocks(
+            f"{enabled_icon} {strength}% ({network_name})", color=Color.GREEN
+        )
+    elif stdout == "down":
+        print_i3blocks(f"{disabled_icon} [No Network]", color=Color.RED)
+    else:
+        raise Exception(f"unknown operstate: {stdout}")
