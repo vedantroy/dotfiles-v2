@@ -40,3 +40,6 @@
 - I have included versions of the zsh plugins in this repo (instead of cloning them).
   This means their versions are frozen unless I manually update. This seems fine
   since I never previously manually updated.
+- You might need to disable the header bar for Gnome terminal with `gsettings set org.gnome.Terminal.Legacy.Settings headerbar false`
+  - Close all terminals afterwards to make changes take effect	
+  - Disable the menu bar with a right-click on it + "Don't show" (or whatever the option is)
