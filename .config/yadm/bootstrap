@@ -15,7 +15,7 @@ cd i3-gnome-flashback
 sudo make install
 cd ..
 
-sudo apt install zsh curl neovim rofi i3blocks feh xclip fzf ripgrep redshift picom unzip fonts-hack-ttf
+sudo apt install zsh curl neovim rofi i3blocks feh xclip fzf ripgrep redshift picom unzip
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
 
 # Chrome
