@@ -3,6 +3,11 @@ exec --no-startup-id picom -b
 
 # visuals
 
+# Start compositor (responsible for shadows, transparency, etc.)
+exec --no-startup-id picom -b
+# Set background image
+exec --no-startup-id "feh --bg-fill ~/.config/background.png"
+
 ## gaps
 gaps outer 0
 gaps inner 20
