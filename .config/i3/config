@@ -1,15 +1,14 @@
 # startup programs
 exec --no-startup-id picom -b
 
-
 # visuals
 
 ## gaps
-gaps outer 0f
+gaps outer 0
 gaps inner 20
 
-## TODO: What problem?
-# (Original comment: "uncommenting the line below fixes the problem")
+# I believe this fixes a hard-to-describe visual glitch
+# (uncomment & find out!)
 for_window [class=".*"] border pixel 0
 
 ## Font for window titles.
@@ -25,6 +24,8 @@ set $purple #b16286
 set $aqua #689d68
 set $gray #a89984
 set $darkgray #1d2021
+# TODO: In the old I3 config, I didn't have to define this
+set $white #ffffff
 
 # class                 border|backgr|text|indicator|child_border
 client.focused          $blue $blue $darkgray $purple $darkgray
@@ -54,15 +55,21 @@ bar {
 
 ## terminal
 # TODO: Make it so that we always use launch kitty
-# (Might need to set $TERMINAL?)
+# (might need to set $TERMINAL?)
 # https://build.i3wm.org/docs/i3-sensible-terminal.html
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec gnome-terminal
 
 ## Chrome
 bindsym $mod+c exec google-chrome-stable
 
 ## exiting
-bindsym $mod+Shift+e gnome-session-quit
+bindsym $mod+Shift+e exec gnome-session-quit
+
+## Rofi
+# search applications
+bindsym $mod+d exec "rofi -show run"
+# search windows
+bindsym $mod+Shift+d exec "rofi -show window"
 
 # keybindings - window management
 
@@ -149,3 +156,9 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# keybindings - other
+
+## reload config file (useful for initial setup/debugging)
+# Alternatively: run `i3-msg reload` or `i3-msg restart`
+bindsym $mod+Shift+c reload
