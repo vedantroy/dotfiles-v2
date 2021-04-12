@@ -60,6 +60,7 @@ zstyle ':vcs_info:*' enable git
 # Make sure there are no lines like
 # "autoload -Uz promptinit && promptinit && prompt adam1"
 # or your prompt will be overridden
+# https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
 PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
 
 # Syntax highlighting
