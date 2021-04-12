@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+sudo apt-get update
+
+sudo add-apt-repository ppa:kgilmer/speed-ricer
+sudo apt-get update
+sudo apt install i3-gaps
+
+sudo apt install gnome-flashback build-essential
+
+cd ~/Desktop
+
+# build gnome-flashback
+sudo apt install git
+git clone https://github.com/deuill/i3-gnome-flashback.git
+cd i3-gnome-flashback
+sudo make install
+cd ..
+
+sudo apt install zsh yadm curl neovim rofi
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+
+# Chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+
+
