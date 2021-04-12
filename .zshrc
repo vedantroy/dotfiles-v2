@@ -33,14 +33,13 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # https://github.com/agkozak/zsh-z/
 # jump around directories with `z`
-source ~/.zsh/zsh-z.plugin.zsh
+#source ~/.zsh/zsh-z.plugin.zsh
 
 # Fish-like auto suggestions
 # https://github.com/zsh-users/zsh-autosuggestions
+#ZSH_AUTOSUGGEST_MANUAL_REBIND="true"
 source ~/.zsh/autosuggestions.zsh
 
-# Syntax highlighting
-source ~/.zsh/fast-synax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Use modern completion system
 autoload -Uz compinit
@@ -50,3 +49,8 @@ compinit
 # "If you add <the below> to your .zshrc, your completion menus will look nice"
 zstyle ':completion:*' menu select
 
+# Syntax highlighting
+# there's another plugin (fast-syntax-highlighting) that has
+# better details/highlighting but it makes zsh slower to startup
+# This plugin must be sourced at the end
+source ~/.zsh/syntax-highlighting/syntax-highlighting.zsh
