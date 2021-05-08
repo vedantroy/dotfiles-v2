@@ -1,0 +1,5 @@
+[user]
+    # email = <foo@bar.org>
+	name = Vedant Roy
+[core]
+	editor = vim
