@@ -18,7 +18,7 @@ from __helpers__ import (
 
 # This line should always be first -- it ensures exceptions are
 # caught, recorded to a log file, and the widget displays a warning
-# sys.excepthook = set_except_hook(__file__)
+sys.excepthook = set_except_hook(__file__)
 
 
 class FileStatus(Enum):
