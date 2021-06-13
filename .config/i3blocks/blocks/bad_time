@@ -1,0 +1,19 @@
+#! /usr/bin/env python3
+
+import subprocess
+import os
+import re
+import sys
+from __helpers__ import (
+    safe_execute,
+    print_i3blocks,
+    Color,
+    set_except_hook,
+    strip_trailing_newline,
+)
+
+# This line should always be first -- it ensures exceptions are
+# caught, recorded to a log file, and the widget displays a warning
+sys.excepthook = set_except_hook(__file__)
+time = strip_trailing_newline(safe_execute('date --date "next hour" "+%I:%M %p?"'))
+print_i3blocks(f" {time}", short_msg=None, color=Color.RED)

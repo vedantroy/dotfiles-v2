@@ -63,13 +63,15 @@ bar {
 # keybindings - applications
 
 ## terminal
-# TODO: Make it so that we always use launch kitty
 # (might need to set $TERMINAL?)
 # https://build.i3wm.org/docs/i3-sensible-terminal.html
 bindsym $mod+Return exec gnome-terminal
 
 ## Chrome
 bindsym $mod+c exec google-chrome-stable
+
+## toggle time tracking
+bindsym $mod+Shift+t exec "~/.config/i3blocks/blocks/time_tracker toggle"
 
 ## exiting
 bindsym $mod+Shift+e exec gnome-session-quit
@@ -81,6 +83,12 @@ bindsym $mod+d exec "rofi -show run"
 bindsym $mod+Shift+d exec "rofi -show window"
 
 # keybindings - window management
+
+# TODO: I don't use these enough. Keep only the ones that are useful.
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
 
 ## Use super as modifier key
 set $mod Mod4
@@ -111,6 +119,9 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+## Kill all windows in workspace
+bindsym $mod+Ctrl+e focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
 
 # create splits -- my custom Vim bindings
 # - x for horizontal vim split

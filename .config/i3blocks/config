@@ -3,6 +3,12 @@
 
 command=~/.config/i3blocks/blocks/$BLOCK_NAME
 
+[bad_time]
+interval=60
+
+[time_tracker]
+interval=1
+
 [time]
 interval=60
 

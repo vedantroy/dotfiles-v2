@@ -1,0 +1,128 @@
+#! /usr/bin/env python3
+
+import os
+import sys
+import time
+import datetime
+import json
+
+from enum import Enum
+
+from __helpers__ import (
+    safe_execute,
+    print_i3blocks,
+    Color,
+    set_except_hook,
+    strip_trailing_newline,
+)
+
+# This line should always be first -- it ensures exceptions are
+# caught, recorded to a log file, and the widget displays a warning
+sys.excepthook = set_except_hook(__file__)
+
+
+class FileStatus(Enum):
+    OPENED = 1
+    CREATED = 2
+
+
+DB_DIR = "./time_data"
+# the start of the current "bad" activity
+ACTIVITIES = f"{DB_DIR}/activities"
+CUR_DAY = f"{DB_DIR}/cur_day"
+
+
+def get_file(p):
+    try:
+        f = open(p, "r")
+        return (f, FileStatus.OPENED)
+    except IOError:
+        f = open(p, "w+")
+        return (f, FileStatus.CREATED)
+
+
+seed_state = False
+curdate = datetime.date.today().strftime("%B-%d-%Y")
+if not os.path.exists(DB_DIR):
+    seed_state = True
+else:
+    f_cd, status = get_file(CUR_DAY)
+    if status == FileStatus.CREATED:
+        # we have no current date -- write it
+        f_cd.write(curdate)
+        f_cd.close()
+    else:
+        olddate = f_cd.readline()
+        if olddate != curdate:
+            # we're in a new day
+            f_cd.close()
+            # delete all the data
+            os.rmdir(DB_DIR)
+            seed_state = True
+        else:
+            f_cd.close()
+
+if seed_state:
+    # recreate the data dir
+    os.makedirs(DB_DIR)
+    with open(CUR_DAY, "w+") as f_cd:
+        # write the new day
+        f_cd.write(curdate)
+    with open(ACTIVITIES, "w+") as f:
+        json.dump([], f)
+
+
+def get_acts():
+    with open(ACTIVITIES, "r") as f:
+        return json.load(f)
+
+
+if len(sys.argv) == 2:
+    assert sys.argv[1] == "toggle"
+    remove = False
+    acts = get_acts()
+    acts.append(int(time.time()))
+    with open(ACTIVITIES, "w+") as f:
+        json.dump(acts, f)
+elif len(sys.argv) == 1:
+
+    def format_time(secs, thresh=10):
+        if secs is None:
+            return None
+        mins = secs / 60
+        if mins < thresh:
+            if mins == 0:
+                mins = "0"
+            else:
+                mins = f"{mins:.2f} mins"
+        else:
+            mins = round(mins)
+            mins = str(mins)
+        return mins
+
+    time_wasted = 0
+    acts = get_acts()
+    chunk_size = 2
+    cur_act_time_burned = None
+    for i in range(0, len(acts), chunk_size):
+        act = acts[i : i + chunk_size]
+        if len(act) == 2:
+            time_wasted += act[1] - act[0]
+        else:
+            assert cur_act_time_burned == None
+            cur_act_time_burned = int(time.time()) - act[0]
+            time_wasted += cur_act_time_burned
+
+    cmd = f'date --date "{time_wasted} seconds ago" "+%I:%M %p?"'
+    res = strip_trailing_newline(safe_execute(cmd))
+    time_wasted = format_time(time_wasted)
+    cur_act_time_burned = format_time(cur_act_time_burned)
+    if cur_act_time_burned:
+        print_i3blocks(
+            f" {res} (total: {time_wasted}, cur: {cur_act_time_burned})",
+            color=Color.RED,
+        )
+    else:
+        print_i3blocks(f" {res} (total: {time_wasted})", color=Color.RED)
+else:
+    raise Exception(f"Invalid args (expected 1 or 2): {sys.argv[1:]}")
