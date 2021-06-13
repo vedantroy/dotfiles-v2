@@ -5,7 +5,7 @@ import sys
 import time
 import datetime
 import json
-
+import shutil
 from enum import Enum
 
 from __helpers__ import (
@@ -18,7 +18,7 @@ from __helpers__ import (
 
 # This line should always be first -- it ensures exceptions are
 # caught, recorded to a log file, and the widget displays a warning
-sys.excepthook = set_except_hook(__file__)
+# sys.excepthook = set_except_hook(__file__)
 
 
 class FileStatus(Enum):
@@ -57,7 +57,7 @@ else:
             # we're in a new day
             f_cd.close()
             # delete all the data
-            os.rmdir(DB_DIR)
+            shutil.rmtree(DB_DIR)
             seed_state = True
         else:
             f_cd.close()
